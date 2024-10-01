@@ -1,51 +1,57 @@
-# Farlo JavaScript Tech Test
 
-Congratulations on being selected to progress to the next stage of the interview process and to complete our technical test. The purpose of this test is to assess the quality of the code that you write, your approach to problem solving, and your ability to reason about the approaches and practices you have implemented.
+### How to run the application
 
-There isn't necessarily a correct or perfect submission for this test, different approaches have various benefits and downsides, however you will be expected to defend your decisions if you are asked to attend a face-to-face interview.
+1. Navigate to the farlo directory and install all dependencies in both Backend and Frontend directories 
+2. Run `node scraper.js` in the backend to scrape the data and write it into the showsData.json file
+3. Run the server `npm start` in the backend
+4. Run the Frontend `npm start` in the frontend to view the application
 
-In the same vein, do not worry too much about how much progress you make through each part of the test, but rather make sure that what you do complete is of a high, production-ready, standard. We expect you to spend around 3 hours on this task.
-
-If you have any questions please do not hesitate to contact us.
-
-## The Task
----
-
-As a JavaScript Developer at Farlo, you will be required to work  across the front-end of our sites. This will involve extending and building new Node.js services that will integrate with our React front-end.
-
-For this task, we would like you do 3 things;
-
-1. Build a Node.js scraper that scrapes theatre shows data from an API ever 5min and stores them in a local file.
-2. Create a Node.JS API endpoint that serves the shows from the local file.
-3. Build a simple React component that consumes this endpoint and displays the shows on the browser.
-
-### Scraper
-
-You should fetch the shows data from the following endpoint and write the results to a local file.
-- [https://officiallondontheatre.com/wp-json/shows/all-open](https://officiallondontheatre.com/wp-json/shows/all-open)
-
-### API Endpoint
-
-Your API endpoint should accept a `GET` request that returns the shows stored in the local file as JSON
-
-### React Component
-
-Recreate the component in the attached "react-component.jpg" image by fetching the shows from your endpoint.
-
-In the `/shows/all-shows` endpoint you scraped earlier, you will find a `see_tickets_url_infos` property that stores an array of booking links. If the array is empty, then that show should appear as "SOLD OUT". If there are items in the array, then you should pick the url with a subdomain of `tktsonline.seetickets.com` as the booking link and if that is not available fallback to using the `officiallondontheatre.seetickets.com` url.
-
-- Shows should be displayed on a single column grid on mobile device, two columns on medium size screens and three columns for large screens
-- Each show tile should include the show image, title and click through to the correct booking link
-- "SOLD OUT" shows should be greyed out with a label of "SOLD OUT" in place of the "BOOK NOW" CTA. You should also **not** be able to click on these tiles.
-- Shows tiles on the same row should all be equal height
+The backend should be running to serve data, and the frontend will allow you to interact with the application in your browser.
 
 
-![React Component](react-component.jpg)
+### Technical Test Approach
 
+1. **Understanding Requirements**
+   - Thoroughly reviewed the specifications to ensure a clear understanding of the expected functionalities and design.
+   - Prioritised tasks based on their complexity and dependencies.
 
-## Project Setup
----
+2. **Choosing Technologies**
+   - **Backend**: Used Node.js with Express for the server, enabling easy setup and fast response handling.
+   - **Frontend**: Utilised React to build a responsive user interface, ensuring a smooth user experience.
+   - **Testing**: Implemented Jest and React Testing Library to ensure robust testing for both backend and frontend components.
 
-We recommend you use `create-react-app` as this will give you a lot of functionality for free, however if you have your own boilerplate then you are welcome to use that instead. Please separate the boilerplate and your own work into separate commits to make the work of the reviewers easier.
+3. **Code Organisation**
+   - Structured the project into clear directories (backend, frontend, \_\_tests\_\_) to improve maintainability.
+   - Followed consistent naming conventions for files and components to enhance readability.
 
-Please include a COMMENTS.md with any decisions you made that you feel are worth highlighting and concessions you had to make due to the time constraints, as well as anything else you think we should be aware of when reviewing your code.
+4. **Implementation Practices**
+   - **Modular Design**: Kept the code modular by separating concerns (e.g., API calls, components, styles).
+   - **Error Handling**: Incorporated comprehensive error handling, particularly in API calls, to manage failures gracefully.
+   - **Environment Variables**: Used dotenv for managing sensitive information, keeping API keys and URLs out of the source code.
+   - **Responsive Design**: Implemented CSS Grid for a flexible layout that adapts to different screen sizes.
+
+5. **Testing**
+   - Wrote unit tests for core functionalities, ensuring all critical paths were covered.
+   - Used mocks for external dependencies to isolate tests and simulate various scenarios.
+   - Conducted tests for error states to validate proper handling and messaging.
+
+6. **Documentation and Comments**
+   - Included comments in the code to explain complex logic and decisions, making it easier for others to understand.
+   - Created a COMMENTS.md file to provide insights into the project decisions and any concessions made due to time constraints.
+
+### Decision Rationale
+- **ES6 Modules**: Chose ES6 syntax for modernity and readability, in line with industry standards.
+- **Fetch API**: Utilised `node-fetch` for API calls, balancing ease of use with functionality.
+- **CSS Grid**: Selected CSS Grid for layout management, enhancing responsiveness without complex media queries.
+
+### Trade-offs
+- **Time Constraints**: Focused on core functionalities, resulting in some edge cases not being covered in testing.
+- **Error Messages**: Implemented basic error messages; more user-friendly messaging could be developed with additional time.
+
+### Future Considerations
+- **Increase testing coverage** to include more edge cases and improve asynchronous error handling.
+- **Development**: "Implement concurrency to handle tasks in parallel."
+- **Expand documentation** to make it easier for new developers to onboard and understand the project.
+- **Features**: Add a modal for the 'About the show' section of the UI application.
+
+I look forward to any feedback you may have and would be keen to discuss my approach further during the next stage of the interview process. Thank you once again for this opportunity!
