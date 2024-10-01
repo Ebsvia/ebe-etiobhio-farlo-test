@@ -88,18 +88,17 @@
   .sold-out-text {
     font-size: 1rem;
     font-weight: bold;
-    color: #999;
-    margin-top: auto;
+    color: #707070;
   }
   
   .show-tile.sold-out {
     background-color: #f0f0f0;
-    opacity: 0.6;
+    opacity: 0.9;
     pointer-events: none;
   }
   
   .show-tile.sold-out h2, 
   .show-tile.sold-out h3 {
-    color: #888;
+    color: #707070;
   }
   
