@@ -38,13 +38,27 @@ const Shows = () => {
         <h3>Today&apos;s Deals</h3>
       </div>
       <div className='shows-grid'>
-        {shows.map((show) => (
-          <div key={show.id} className='show-tile'>
-            <img src={show.image} alt={show.title} className='show-image' />
-            <h2>{show.title || 'Untitled Show'}</h2>
-            <a href={show.see_tickets_url_infos[0]?.url} className='book-now-button'>Book Now</a>
-          </div>
-        ))}
+        {shows.map((show) => {
+          const isSoldOut = !show.see_tickets_url_infos.length;
+
+          return (
+            <div key={show.id} className={`show-tile ${isSoldOut ? 'sold-out' : ''}`}>
+              <img src={show.image} alt={show.title} className='show-image' />
+              <h2>{show.title || 'Untitled Show'}</h2>
+         
+              {isSoldOut ? (
+                <p className='sold-out-text'>SOLD OUT</p>
+              ) : (
+                <>
+                <h3>About The Show</h3>
+                <a href={show.see_tickets_url_infos[0].url} className='book-now-button'>
+                  Book Now
+                </a>
+                </>
+              )}
+            </div>
+          );
+        })}
       </div>
     </div>
   );
