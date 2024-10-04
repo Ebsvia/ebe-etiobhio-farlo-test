@@ -1,46 +1,91 @@
-# COMMENTS.md
+**Project Overview**
 
-## Project Overview
-This project is a backend service designed to fetch and display show data from an external API. The application utilises modern JavaScript features and follows best practices for code organisation, error handling, and testing.
+This document highlights the key decisions, trade-offs, and considerations made during the development of the project. The task involved scraping data, serving it via an API, and displaying it in a React front-end. The technologies used include TypeScript, Axios, React, cron, and Cypress for testing. Time constraints limited certain enhancements, which are noted for future improvements.
 
-## Key Decisions, Reasoning, and Trade-offs
+**Key Decisions and Trade-offs**
 
-### 1. **Decision**: Use ES Modules
-   - **Reasoning**: Adopting ES modules (`import/export`) allows for better readability and a more modern approach to JavaScript development.
-   - **Trade-offs**: Some older packages or tooling may not fully support ES modules. However, this decision aligns with current standards and prepares the codebase for future updates.
+**1. Using TypeScript**
 
-### 2. **Decision**: Use the `dotenv` package for environment configuration
-   - **Reasoning**: Using `dotenv` enables easy management of environment variables, keeping sensitive information like API URLs out of the codebase.
-   - **Trade-offs**: It introduces an external dependency, but this is outweighed by the improved security and maintainability of configuration management.
+- **Decision**: TypeScript was used for both the backend and frontend.
+- **Reasoning**: TypeScript provides static typing and better developer tooling, which improves code reliability and maintainability. It ensures that both the API and UI handle data correctly and avoids common type-related issues.
+- **Trade-offs**: TypeScript can add complexity, especially when defining complex types or integrating third-party libraries. However, the benefits of early error detection and type safety outweigh these concerns, particularly for long-term maintenance.
 
-### 3. **Decision**: Implement data fetching with `node-fetch`
-   - **Reasoning**: The `node-fetch` library simplifies HTTP requests in Node.js, making the code cleaner and more concise.
-   - **Trade-offs**: This choice might not be as efficient as using native fetch APIs, but it ensures compatibility with Node.js and enhances the readability of asynchronous code.
+**2. Using Axios for HTTP Requests**
 
-### 4. **Decision**: Comprehensive error handling in the fetch function
-   - **Reasoning**: Including detailed error handling allows for graceful failure and better debugging, providing useful feedback during data fetch failures.
-   - **Trade-offs**: More complex code may lead to increased maintenance, but it significantly improves user experience and helps identify issues quickly.
+- **Decision**: I used Axios for making HTTP requests to the API on both the backend (for scraping) and frontend (for consuming the API).
+- **Reasoning**: Axios is a popular, well-supported HTTP client that simplifies request and response handling. It also supports promises, making it easier to work with async/await. Axios has a more feature-rich API (such as automatic JSON parsing and better error handling) compared to the built-in fetch.
+- **Trade-offs**: Axios introduces an extra dependency. However, its superior feature set and ease of use make it worth the trade-off compared to using fetch or other alternatives.
 
-### 5. **Decision**: Use Jest as the testing framework
-   - **Reasoning**: Jest is widely adopted and provides robust features for testing asynchronous code, making it suitable for this project.
-   - **Trade-offs**: Although Jest is a powerful tool, it may introduce a learning curve for developers unfamiliar with it. However, its benefits in terms of test coverage and reliability justify its inclusion.
+**3. Scraper with cron**
 
-### 6. **Decision**: Design the frontend layout using CSS Grid
-   - **Reasoning**: CSS Grid allows for responsive designs that can easily adapt to different screen sizes, ensuring a better user experience.
-   - **Trade-offs**: The complexity of grid layouts may require additional testing across different browsers, but the benefits in layout flexibility and responsiveness are significant.
+- **Decision**: The scraper is scheduled using the cron library to run every 5 minutes.
+- **Reasoning**: cron offers a simple yet flexible way to manage scheduled tasks in Node.js. The scraper fetches show data from the API and stores it in a local file.
+- **Trade-offs**: JSON file storage is not scalable for large datasets. In a production environment, a database like MongoDB or PostgreSQL would be more efficient and reliable, especially for concurrent reads/writes.
 
-## Concessions Due to Time Constraints
-### 1. **Concession**: Limited Testing Coverage
-   - **Reasoning**: Focused on critical functionalities within the time frame, leading to some edge cases being untested.
-   - **Trade-offs**: While essential features are covered, potential bugs in less critical paths may go unnoticed.
+**4. File Storage for Scraped Data**
 
-### 2. **Concession**: Basic Error Messaging
-   - **Reasoning**: The error messages provided are functional but not user-friendly. More elaborate messages could enhance user experience but were deprioritised.
-   - **Trade-offs**: This might affect user satisfaction, but the priority was to deliver a working solution promptly.
+- **Decision**: Scraped data is stored in a local JSON file.
+- **Reasoning**: This approach meets the requirements and simplifies persistence without requiring a database setup. 
+- **Trade-offs**: File storage is not suitable for large-scale applications, as it can cause performance bottlenecks or data corruption in concurrent scenarios. In a production setting, the scraper would write to a database for better scalability and data management.
 
-## Future Improvements
-- **Enhance Testing**: Expand the test suite to cover more edge cases and functionalities.
-- **Development**: "Implement concurrency to handle tasks in parallel."
-- **Documentation**: Add inline comments and documentation for easier onboarding of new developers.
-- **Features**: Add a modal for the 'About the show' section of the UI application.
-- **UI**: Inspect the example image design to insure my application matches the design exact.
+**5. React Component with Axios**
+
+- **Decision**: I used Axios to fetch show data from the API in the React component.
+- **Reasoning**: Axios simplifies API calls and provides built-in support for handling JSON responses, error states, and request cancellation. The component uses useEffect to fetch data when it mounts and stores the result in the component's state.
+- **Trade-offs**: Since this is a simple React component, advanced error handling (such as retries or showing specific error messages) was omitted due to time constraints. These can be added later to enhance the user experience.
+
+**6. Handling of Sold-Out Shows**
+
+- **Decision**: Shows that have no valid ticket URLs are displayed as "SOLD OUT" and styled accordingly in the UI.
+- **Reasoning**: This feature meets the requirements. By distinguishing sold-out shows with greyed-out tiles, users can easily see which shows are unavailable for booking. This improves the overall user experience by providing visual clarity and preventing interaction with unavailable shows.
+- **Trade-offs**: The current implementation is minimal. Future enhancements could include better visual cues, such as animations or notifications when a show sells out, and providing more informative messages.
+
+**7. Unit Testing with Jest**
+
+- **Decision**: Jest was used for unit testing the API and some critical logic in the scraper.
+- **Reasoning**: Jest is a well-supported testing framework that provides fast and reliable unit testing with excellent integration with TypeScript. It ensures that the core logic of the API and backend works as expected.
+- **Trade-offs**: Some edge cases were not tested due to time constraints. Future improvements could include more comprehensive tests, especially for error scenarios such as API failures or invalid pagination parameters.
+
+**8. Unit Testing with Cypress**
+
+- **Decision:** I used Cypress to write unit tests for both the front-end and API.
+- **Reasoning**: Cypress is a powerful end-to-end testing framework that can be used for both unit and integration tests. It simplifies browser interaction, allowing the testing of React components and ensuring that the API endpoint behaves as expected.
+- **Trade-offs**: Due to time constraints, not all possible test cases were implemented. In a more developed project, I would aim for higher test coverage, including edge cases and failure scenarios (e.g., network failures, empty datasets).
+
+**9. CSS Grid for Responsive Layout**
+
+- **Decision**: I used CSS Grid for laying out the show tiles in a responsive manner.
+- **Reasoning**: CSS Grid allows for a simple, clean layout that adapts to different screen sizes (1 column for mobile, 2 columns for medium screens, and 3 columns for large screens). It meets the requirements without introducing unnecessary complexity.
+- **Trade-offs**: The design is basic and custom. In a production environment, I would consider using a UI framework like Material-UI or TailwindCSS for more robust, responsive design and consistency across components.
+
+**Concessions Due to Time Constraints**
+
+**Limited Error Handling:**
+While basic error handling is implemented in both the scraper and API, more comprehensive error management (e.g., retries, exponential backoff, and logging) was not included.
+
+**No Database:**
+Due to time constraints and requirements, I opted for storing data in a JSON file. In a production environment, I would integrate a database like MongoDB or PostgreSQL to handle larger datasets and ensure better data integrity.
+
+**Pagination UI:**
+Although the API supports pagination, I did not implement a front-end UI for navigating through pages. Adding pagination buttons or infinite scrolling would improve the user experience.
+
+**Test Coverage:**
+Basic tests were added using Cypress to verify core functionality. However, full test coverage (including edge cases, error handling, and performance testing) is lacking and would be a priority in future iterations.
+
+
+**Future Improvements**
+
+
+**Enhanced Error Handling:** Add more robust error handling for the Axios requests and the API, including retries, logging with tools like winston, and more detailed error messages for the user.
+
+**Database Integration:** Replace JSON file storage with a more scalable database solution like MongoDB or PostgreSQL to handle larger datasets, improve query performance, and avoid concurrency issues.
+
+**Caching:** Implement caching for the API responses (using Redis) to reduce file I/O and improve performance for frequently accessed data.
+
+**UI Improvements:** Add a pagination UI in the React front-end to allow users to browse through pages of shows. Implement loading states and better error messages for smoother user experience.
+
+**Testing:** Expand the test suite in Cypress and Jest unit testing to cover more edge cases, including invalid query parameters, empty datasets, and network failures. Unit tests for each React component and API route will ensure that the code remains stable as it grows.
+
+**UX Enhancements:** Improve the "SOLD OUT" design with more visually engaging elements, such as tooltips, animations, or clear messaging, to make it more intuitive for users.
+
+This document provides an overview of the decisions made, trade-offs accepted, and future improvements planned for the project. The current implementation meets the functional requirements, with opportunities for further optimisation and refinement.
