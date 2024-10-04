@@ -55,3 +55,4 @@ The backend should be running to serve data, and the frontend will allow you to 
 - **Features**: Add a modal for the 'About the show' section of the UI application.
 
 I look forward to any feedback you may have and would be keen to discuss my approach further during the next stage of the interview process. Thank you once again for this opportunity!
+
