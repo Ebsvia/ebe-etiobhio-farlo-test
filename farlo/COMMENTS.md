@@ -69,23 +69,3 @@ Due to time constraints and requirements, I opted for storing data in a JSON fil
 **Pagination UI:**
 Although the API supports pagination, I did not implement a front-end UI for navigating through pages. Adding pagination buttons or infinite scrolling would improve the user experience.
 
-**Test Coverage:**
-Basic tests were added using Cypress to verify core functionality. However, full test coverage (including edge cases, error handling, and performance testing) is lacking and would be a priority in future iterations.
-
-
-**Future Improvements**
-
-
-**Enhanced Error Handling:** Add more robust error handling for the Axios requests and the API, including retries, logging with tools like winston, and more detailed error messages for the user.
-
-**Database Integration:** Replace JSON file storage with a more scalable database solution like MongoDB or PostgreSQL to handle larger datasets, improve query performance, and avoid concurrency issues.
-
-**Caching:** Implement caching for the API responses (using Redis) to reduce file I/O and improve performance for frequently accessed data.
-
-**UI Improvements:** Add a pagination UI in the React front-end to allow users to browse through pages of shows. Implement loading states and better error messages for smoother user experience.
-
-**Testing:** Expand the test suite in Cypress and Jest unit testing to cover more edge cases, including invalid query parameters, empty datasets, and network failures. Unit tests for each React component and API route will ensure that the code remains stable as it grows.
-
-**UX Enhancements:** Improve the "SOLD OUT" design with more visually engaging elements, such as tooltips, animations, or clear messaging, to make it more intuitive for users.
-
-This document provides an overview of the decisions made, trade-offs accepted, and future improvements planned for the project. The current implementation meets the functional requirements, with opportunities for further optimisation and refinement.
