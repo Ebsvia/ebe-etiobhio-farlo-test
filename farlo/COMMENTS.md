@@ -26,7 +26,7 @@ This document highlights the key decisions, trade-offs, and considerations made 
 
 - **Decision**: Scraped data is stored in a local JSON file.
 - **Reasoning**: This approach meets the requirements and simplifies persistence without requiring a database setup. 
-- **Trade-offs**: File storage is not suitable for large-scale applications, as it can cause performance bottlenecks or data corruption in concurrent scenarios. In a production setting, the scraper would write to a database for better scalability and data management.
+- **Trade-offs**: File storage is not suitable for large-scale applications, as it can cause performance bottlenecks or data corruption. In a production setting, the scraper would write to a database for better scalability and data management.
 
 **5. React Component with Axios**
 
@@ -46,11 +46,7 @@ This document highlights the key decisions, trade-offs, and considerations made 
 - **Reasoning**: Jest is a well-supported testing framework that provides fast and reliable unit testing with excellent integration with TypeScript. It ensures that the core logic of the API and backend works as expected.
 - **Trade-offs**: Some edge cases were not tested due to time constraints. Future improvements could include more comprehensive tests, especially for error scenarios such as API failures or invalid pagination parameters.
 
-**8. Unit Testing with Cypress**
-
-- **Decision:** I used Cypress to write unit tests for both the front-end and API.
-- **Reasoning**: Cypress is a powerful end-to-end testing framework that can be used for both unit and integration tests. It simplifies browser interaction, allowing the testing of React components and ensuring that the API endpoint behaves as expected.
-- **Trade-offs**: Due to time constraints, not all possible test cases were implemented. In a more developed project, I would aim for higher test coverage, including edge cases and failure scenarios (e.g., network failures, empty datasets).
+**8. Unit Testing with Cypress** [DID NOT FULLY IMPLEMENT AS I REDID THE TEST IN JAVASCRIPT]
 
 **9. CSS Grid for Responsive Layout**
 
